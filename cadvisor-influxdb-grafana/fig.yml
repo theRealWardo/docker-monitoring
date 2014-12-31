@@ -1,0 +1,37 @@
+influxdb:
+  image: tutum/influxdb
+  expose:
+    - "8090"
+    - "8099"
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+  environment:
+    PRE_CREATE_DB: "cadvisor"
+
+grafana:
+  image: tutum/grafana
+  ports:
+    - "8088:80"
+  links:
+    - influxdb
+  environment:
+    INFLUXDB_HOST: docker-vm1
+    INFLUXDB_PORT: 8086
+    INFLUXDB_NAME: cadvisor
+    INFLUXDB_USER: root
+    INFLUXDB_PASS: root
+
+cadvisor:
+  image: logbase/cadvisor-influxdb
+  volumes:
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+  ports:
+    - "8080:8080"
+  links:
+    - influxdb
+  environment:
+    RUN_OPTS: "-storage_driver=influxdb -storage_driver_host=influxdb:8086 -storage_driver_buffer_duration=1s"
+
