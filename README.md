@@ -2,7 +2,10 @@
 
 This is my collection of random attempts at monitoring Docker containers using various open
 source technologies. Neither closed source nor paid services (like [DataDog](https://www.datadoghq.com))
-will be discussed/covered in this playground.
+will be discussed/covered in this playground. If there is a piece of software you think might be
+super awesome at monitoring Docker containers please
+[file an issue](https://github.com/theRealWardo/docker-monitoring/issues), +1 an existing issue
+or send a PR!
 
 If you want to check out these stacks, you'll need to have installed [Fig](http://www.fig.sh/).
 
