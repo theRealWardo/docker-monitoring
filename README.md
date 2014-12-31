@@ -1,6 +1,8 @@
 # Docker Monitoring Playground
 
-This is my collection of random attempts at monitoring Docker containers using various technologies.
+This is my collection of random attempts at monitoring Docker containers using various open
+source technologies. Neither closed source nor paid services (like [DataDog](https://www.datadoghq.com))
+will be discussed/covered in this playground.
 
 If you want to check out these stacks, you'll need to have installed [Fig](http://www.fig.sh/).
 
