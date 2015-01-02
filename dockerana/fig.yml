@@ -44,4 +44,6 @@ ingestsyslog:
   links:
     - statsd:statsd
   environment:
-    HOSTNAME: "`hostname`"
+    # It isn't possible to grab the HOSTNAME environment variable as
+    # it is set by bash and not available to the fig Python script.
+    HOSTNAME: 'yourhost'
