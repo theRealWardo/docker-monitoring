@@ -24,7 +24,7 @@ user name `root` and password `root`. Finally, to try graphing in Grafana you'll
 want to run `fig logs grafana` which will print the password to `yourhost:8088`.
 Note that Grafana dashboards will not persist.
 
-##### Dockerana
+### Dockerana
 
 `dockerana` contains a `fig.yml` file that brings up 7 containers.
 
@@ -35,3 +35,10 @@ Note that Grafana dashboards will not persist.
 * [Grafana](https://github.com/dockerana/dockerana/tree/master/components/grafana) - for graphing and building dashboards.
 * [Elasticsearch](https://github.com/dockerana/dockerana/tree/master/components/elasticsearch) - for storing dashboards.
 * [ingestsyslog](https://github.com/dockerana/dockerana/blob/master/Dockerfile) - a container to report host machine syslog events.
+
+This is a pretty large stack with a lot going on, but basically it seems that each machine should run something like
+`ingestsyslog` which is monitoring the host machine and reporting the number of running processes and more to StatsD.
+I could only see loadavg and processes reported but the code seems to indicate more is supposed to be happening.
+I didn't really dig in to try and get more to work (yet). Anyway, you can look at the data in Graphite at `yourhost:8080`
+or go to the Grafana dashboard at `yourhost:8081`. You can add more containers that report data with
+`docker run -d --link dockerana_statsd_1:statsd dockerana/dockerana` or similar.
