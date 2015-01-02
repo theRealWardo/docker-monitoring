@@ -7,7 +7,8 @@ super awesome at monitoring Docker containers please
 [file an issue](https://github.com/theRealWardo/docker-monitoring/issues), +1 an existing issue
 or send a PR!
 
-If you want to check out these stacks, you'll need to have installed [Fig](http://www.fig.sh/).
+If you want to check out these stacks, you'll need to have installed [Fig](http://www.fig.sh/). To run any
+of them, just go into the directory with `fig.yml` of the stack you want to try and run `fig up -d`.
 
 ### cAdvisor &#65515; InfluxDB &#65513; Grafana
 
@@ -17,10 +18,20 @@ If you want to check out these stacks, you'll need to have installed [Fig](http:
 * [InfluxDB](https://github.com/influxdb/influxdb) - for storing whatever cAdvisor reports
 * [Grafana](https://github.com/grafana/grafana) - for looking at what is in InfluxDB
 
-A simple `fig up -d` in that folder should bring some containers up.
-
 You can checkout what cAdvisor is seeing by going to `yourhost:8080`. Then look
 at what InfluxDB is collecting by going to `yourhost:8083` and log in with the
 user name `root` and password `root`. Finally, to try graphing in Grafana you'll
 want to run `fig logs grafana` which will print the password to `yourhost:8088`.
 Note that Grafana dashboards will not persist.
+
+##### Dockerana
+
+`dockerana` contains a `fig.yml` file that brings up 7 containers.
+
+* [Nginx](https://github.com/dockerana/dockerana/tree/master/components/nginx) - as a frontend for Graphite.
+* [Graphite](https://github.com/dockerana/dockerana/tree/master/components/graphite) - for graphs and stuff.
+* [Carbon Cache](https://github.com/dockerana/dockerana/tree/master/components/carbon) - for storing time series and stuff.
+* [StatsD](https://github.com/dockerana/dockerana/tree/master/components/statsd) - for collecting metrics and forwarding to Carbon.
+* [Grafana](https://github.com/dockerana/dockerana/tree/master/components/grafana) - for graphing and building dashboards.
+* [Elasticsearch](https://github.com/dockerana/dockerana/tree/master/components/elasticsearch) - for storing dashboards.
+* [ingestsyslog](https://github.com/dockerana/dockerana/blob/master/Dockerfile) - a container to report host machine syslog events.

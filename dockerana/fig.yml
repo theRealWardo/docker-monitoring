@@ -1,0 +1,47 @@
+elasticsearch:
+  image: dockerana/elasticsearch
+  ports:
+    - "9200:9200"
+
+carbon:
+  image: dockerana/carbon
+  volumes:
+    - /opt/graphite
+  ports:
+    - "7002:7002"
+    - "2003:2003"
+    - "2004:2004"
+
+graphite:
+  image: dockerana/graphite
+  volumes_from:
+    - carbon
+
+nginx:
+  image: dockerana/nginx
+  ports:
+    - "8080:80"
+  links:
+    - graphite:dockerana-graphite-link
+
+statsd:
+  image: dockerana/statsd
+  ports:
+    - "8126:8126"
+    - "8125:8125/udp"
+  links:
+    - carbon:dockerana-carbon-link
+
+grafana:
+  image: dockerana/grafana
+  ports:
+    - "8081:8081"
+
+ingestsyslog:
+  image: dockerana/dockerana
+  volumes:
+    - /var/log:/tmp/log:ro
+  links:
+    - statsd:statsd
+  environment:
+    HOSTNAME: "`hostname`"
